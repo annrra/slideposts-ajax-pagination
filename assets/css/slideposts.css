@@ -1,0 +1,19 @@
+.testFunc {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+}
+.nav-links a.page-numbers,
+.nav-links span.page-numbers {
+    display: none;
+}
+.nav-links a.next.page-numbers,
+.nav-links span.next.page-numbers,
+.nav-links a.prev.page-numbers,
+.nav-links span.prev.page-numbers {
+    display: inline-block;
+}
+.paginateNumber,
+.pagesNumber {
+    display: none;
+}
