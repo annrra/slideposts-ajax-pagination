@@ -8,6 +8,62 @@
  * Author URI: http://bettermonday.org
  * License: GPL2
  */
+ 
+add_action('admin_init', 'slide_posts_init' );
+add_action('admin_menu', 'slideposts_options_add_page');
+
+// Init plugin options to white list our options
+function slide_posts_init(){
+	register_setting( 'slide_posts_options', 'sp_sample', 'slideposts_options_validate' );
+}
+
+// Add menu page
+function slideposts_options_add_page() {
+	add_options_page('SlidePosts Options', 'SlidePosts Settings', 'manage_options', 'sp_sampleoptions', 'slideposts_options_do_page');
+}
+
+// Draw the menu page itself
+function slideposts_options_do_page() {
+	?>
+	<div class="wrap">
+		<h2>SlidePosts Options</h2>
+		<form method="post" action="options.php">
+			<?php settings_fields('slide_posts_options'); ?>
+			<?php $options = get_option('sp_sample'); ?>
+			<table class="form-table">
+				<tr valign="top"><th scope="row">A Checkbox</th>
+					<td><input name="sp_sample[option1]" type="checkbox" value="1" <?php checked('1', $options['option1']); ?> /></td>
+				</tr>
+				<tr valign="top"><th scope="row">Category name</th>
+					<td><input type="text" name="sp_sample[catname]" value="<?php echo $options['catname']; ?>" /></td>
+				</tr>
+                <tr valign="top"><th scope="row">Posts per age</th>
+					<td><input type="text" name="sp_sample[postsnumber]" value="<?php echo $options['postsnumber']; ?>" /></td>
+				</tr>
+			</table>
+			<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+			</p>
+		</form>
+	</div>
+	<?php	
+}
+
+// Sanitize and validate input. Accepts an array, return a sanitized array.
+function slideposts_options_validate($input) {
+	// Our first value is either 0 or 1
+	$input['option1'] = ( $input['option1'] == 1 ? 1 : 0 );
+	
+	// Say our second option must be safe text with no HTML tags
+	$input['catname'] =  wp_filter_nohtml_kses($input['catname']);
+    $input['postsnumber'] =  wp_filter_nohtml_kses($input['postsnumber']);
+	
+	return $input;
+}
+
+/************************************************************************************************/ 
+
+
 
 function my_assets() {
 	//wp_register_script( 'ajax-implementation', get_template_directory_uri().'/assets/js/ajax-implementation.js', array( 'jquery' ) );
@@ -31,8 +87,12 @@ function slidepost_ajax_pagination() {
     $query_vars = json_decode( stripslashes( $_POST['query_vars'] ), true );
     $query_vars['paged'] = $_POST['page'];
     
+    $options = get_option('sp_sample');
+    $cat_name = $options['catname'];
+    $postsnum = $options['postsnumber'];
+    
         $paged = $_POST['page'];
-        $args = array( 'category_name' => 'work', 'posts_per_page' => 3, 'paged' => $paged ); 
+        $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
         $wp_query = new WP_Query( $query_vars );
         $GLOBALS['wp_query'] = $wp_query;
         $wp_query->query( $args );
@@ -65,22 +125,26 @@ function slidepost_ajax_pagination() {
 
 /**shortcode function**/
 function init_listitems( $atts ) {
+    /* will not use shortcode parameters as data is taken from wp_options
     extract( shortcode_atts( array(
         'category-name' => '',
         'post-per-page' => ''
     ), $atts ) );
+    */
+    $options = get_option('sp_sample');
+    $cat_name = $options['catname'];
+    $postsnum = $options['postsnumber'];
     
     $output = '<div class="wrapSlidePosts">'; 
             
             $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-            $args = array( 'category_name' => $atts['category-name'], 'posts_per_page' => $atts['post-per-page'], 'paged' => $paged ); 
+            $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
             $wp_query = new WP_Query();
             $wp_query->query( $args );
             
             $output .= '<div class="paginateNumber">'. $paged . '</div>';
             $total_pages = $wp_query->max_num_pages; 
             $output .= '<div class="pagesNumber">' . $total_pages . '</div>';
-            $output .= '<div class="catName">' . $atts['category-name'] . '</div>';
             
             $output .= '<div class="slidePostsContainer"><div class="slidePostsTab">';
                 while ($wp_query->have_posts()) : $wp_query->the_post(); 

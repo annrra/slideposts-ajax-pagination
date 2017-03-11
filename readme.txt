@@ -1,15 +1,13 @@
-=== Slide Posts with Ajax Pagination ===
+*** Slide Posts with Ajax Pagination ***
 Contributors: Andrey Raychev
-Tags: admin, AJAX, ajax pagination, back, custom post types, forward, navigation, next, options, page, pages, pagination, paging, post types, post, posts, previous, scroll, scroll to top
-Requires at least: 3.6.0
-Tested up to: 4.7.2
+Tags: admin, AJAX, ajax pagination, back, custom post types, forward, navigation, next, options, page, pages, pagination, paging, post types, post, posts, previous
+Tested up to: 4.7.3
 Stable tag: 2.0.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPL2
 
-Choose infinite scroll, load more button or pagination. Load paged content with Ajax on your posts and pages.
+Load paged content with Ajax on your posts, pages and custom fields.
 
-== Description ==
+*** Description ***
 
-Load paged content with Ajax throughout your Wordpress site. The plugin works on posts and pages.
-[initlist] shortcode will load posts from custom category.
+Load paged content with Ajax throughout your Wordpress site. The plugin works on posts, pages, custom fields.
+[postslist] shortcode will load posts from custom category specified in the plugin options page.
