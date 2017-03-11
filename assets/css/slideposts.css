@@ -1,19 +1,23 @@
-.testFunc {
+.wrapSlidePosts {
+    width: 100%;
+}
+.slidePostsContainer {
     width: 100%;
     overflow: hidden;
     display: block;
 }
-.nav-links a.page-numbers,
-.nav-links span.page-numbers {
+.wrapSlidePosts .slidePostsNav .nav-links a.page-numbers,
+.wrapSlidePosts .slidePostsNav .nav-links span.page-numbers {
     display: none;
 }
-.nav-links a.next.page-numbers,
-.nav-links span.next.page-numbers,
-.nav-links a.prev.page-numbers,
-.nav-links span.prev.page-numbers {
+.wrapSlidePosts .slidePostsNav .nav-links a.next.page-numbers,
+.wrapSlidePosts .slidePostsNav .nav-links span.next.page-numbers,
+.wrapSlidePosts .slidePostsNav .nav-links a.prev.page-numbers,
+.wrapSlidePosts .slidePostsNav .nav-links span.prev.page-numbers {
     display: inline-block;
 }
-.paginateNumber,
-.pagesNumber {
+.wrapSlidePosts .paginateNumber,
+.wrapSlidePosts .pagesNumber,
+.wrapSlidePosts .catName {
     display: none;
 }

@@ -11,27 +11,23 @@
         }
 	}
 
-	$(document).on( 'click', '.navPage .nav-links a', function( event ) {
+	$(document).on( 'click', '.slidePostsNav .nav-links a', function( event ) {
 		event.preventDefault();
 
 		page = find_page_number( $(this) );
         $('.paginateNumber').text(page);
-        //alert(page);
 
 		$.ajax({
 			url: ajaximplementation.ajaxurl,
 			type: 'post',
 			data: {
-				action: 'test_func',
+				action: 'slidepost_ajax_pagination',
 				query_vars: ajaximplementation.query_vars,
 				page: page
 			},
 			success: function( html ) {
-                //console.log(html);
-				$('.wrapFunc').remove();
-				//$('.navPage').remove();
-				$('.entry-content_asd').append( html );
-                //$('.navPage').append( html );
+				$('.slidePostsContainer').remove();
+				$('.wrapSlidePosts').append( html );
 			}
 		})
 	})
