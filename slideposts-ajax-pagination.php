@@ -31,8 +31,11 @@ function slideposts_options_do_page() {
 			<?php settings_fields('slide_posts_options'); ?>
 			<?php $options = get_option('sp_sample'); ?>
 			<table class="form-table">
-				<tr valign="top"><th scope="row">A Checkbox</th>
-					<td><input name="sp_sample[option1]" type="checkbox" value="1" <?php checked('1', $options['option1']); ?> /></td>
+				<tr valign="top"><th scope="row">Convert the posts into gallery</th>
+					<td>
+                        <input name="sp_sample[option1]" type="checkbox" value="1" <?php checked('1', $options['option1']); ?> /><br />
+                        <p>This part is in progress yet ...</p>
+                    </td>
 				</tr>
 				<tr valign="top"><th scope="row">Category name</th>
 					<td><input type="text" name="sp_sample[catname]" value="<?php echo $options['catname']; ?>" /></td>
@@ -103,7 +106,14 @@ function slidepost_ajax_pagination() {
             while ($wp_query->have_posts()) : $wp_query->the_post(); 
             ?>
                 <div class="postBlock">
-                    <?php the_title(); ?>
+                    <h3><?php the_title(); ?></h3>
+                    <div class="postImg">
+                        <?php 
+                        if ( has_post_thumbnail() ) {
+                        	the_post_thumbnail('large');
+                        } ?>
+                    </div>
+                    <div class="postExcerpt"><?php the_content(); ?></div>
                 </div>
             <?php endwhile; ?>
             </div>
@@ -148,12 +158,20 @@ function init_listitems( $atts ) {
             
             $output .= '<div class="slidePostsContainer"><div class="slidePostsTab">';
                 while ($wp_query->have_posts()) : $wp_query->the_post(); 
-                
-                    $output .= '<div class="postBlock">' . get_the_title() . '</div>';
+                    
+                    $output .= '<div class="postBlock">';
+                    $output .= '<h3>' . get_the_title() . '</h3>';
+                    $output .= '<div class="postImg">';
+                        if ( has_post_thumbnail() ) {
+                        	$output .= get_the_post_thumbnail($post->ID);
+                        } 
+                    $output .= '</div>';
+                    $output .= '<div class="postExcerpt"><p>' . get_the_content() . '</p></div>';
+                    $output .= '</div>';
     
                 endwhile;
                 $output .= '</div>';
-                $output .= '<div class="slidePostsNav">';
+                $output .= '<div class="slidePostsNav"><nav class="navigation pagination">';
                     if($paged == $total_pages) {
                         $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>';
                     } elseif ($paged == 1) {
@@ -165,7 +183,7 @@ function init_listitems( $atts ) {
                     
                     //$output .= the_posts_pagination( array('prev_text' => __( 'Previous page', 'twentyseventeen' ), 'next_text' => __( 'Next page', 'twentyseventeen' ), 'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>', ) );
                     
-                $output .= '</div>';
+                $output .= '</nav></div>';
             $output .= '</div>';
             
             wp_reset_query();
