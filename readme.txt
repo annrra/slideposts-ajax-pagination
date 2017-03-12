@@ -5,7 +5,7 @@ Tested up to: 4.7.3
 Stable tag: 2.0.1
 License: GPL2
 
-Load paged content with Ajax on your posts, pages and custom fields.
+Adds posts from custom category with ajax pagination shown on posts, pages and custom fields.
 
 *** Description ***
 
