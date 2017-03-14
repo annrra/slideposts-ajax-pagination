@@ -22,12 +22,19 @@
 			type: 'post',
 			data: {
 				action: 'slidepost_ajax_pagination',
-				query_vars: ajaximplementation.query_vars,
 				page: page
 			},
+            beforeSend: function() {
+                $('.slidePostsContainer').remove();
+        		$(document).scrollTop();
+        		$('.wrapSlidePosts').append( '<div class="wrapLoader" id="spLoader">Loading New Posts...</div>' );
+        	},
 			success: function( html ) {
+                $('.wrapSlidePosts #spLoader').remove();
 				$('.slidePostsContainer').remove();
 				$('.wrapSlidePosts').append( html );
+                $('.slidePostsNav .nav-links a').removeAttr("href"); /* remove href attribute inside links - add button role to anchor elements in the pagination */
+                $('.slidePostsNav .nav-links a').attr('role', 'button'); /* add button role to anchor elements in the pagination */
 			}
 		})
 	})

@@ -69,16 +69,13 @@ function slideposts_options_validate($input) {
 
 
 function my_assets() {
-	//wp_register_script( 'ajax-implementation', get_template_directory_uri().'/assets/js/ajax-implementation.js', array( 'jquery' ) );
     wp_register_script('ajax-implementation', plugins_url('assets/js/ajax-implementation.js', __FILE__ ), array( 'jquery' ) );
 	wp_enqueue_script( 'ajax-implementation' );
     
     wp_enqueue_style( 'slideposts', plugins_url( 'assets/css/slideposts.css', __FILE__ ) );
     
-    global $wp_query;
     wp_localize_script( 'ajax-implementation', 'ajaximplementation', array(
     	'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'query_vars' => json_encode( $wp_query->query )
     ));
 }
 add_action( 'wp_enqueue_scripts', 'my_assets' );
@@ -87,8 +84,6 @@ add_action( 'wp_enqueue_scripts', 'my_assets' );
 add_action( 'wp_ajax_nopriv_slidepost_ajax_pagination', 'slidepost_ajax_pagination' );
 add_action( 'wp_ajax_slidepost_ajax_pagination', 'slidepost_ajax_pagination' );
 function slidepost_ajax_pagination() {
-    $query_vars = json_decode( stripslashes( $_POST['query_vars'] ), true );
-    $query_vars['paged'] = $_POST['page'];
     
     $options = get_option('sp_sample');
     $cat_name = $options['catname'];
@@ -96,9 +91,8 @@ function slidepost_ajax_pagination() {
     
         $paged = $_POST['page'];
         $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
-        $wp_query = new WP_Query( $query_vars );
+        $wp_query = new WP_Query( $args );
         $GLOBALS['wp_query'] = $wp_query;
-        $wp_query->query( $args );
         ?>
         <div class="slidePostsContainer">
             <div class="slidePostsTab">
@@ -126,7 +120,7 @@ function slidepost_ajax_pagination() {
                 ?>
             </div>
         </div>
-        <?php wp_reset_query(); ?>
+        <?php wp_reset_postdata(); ?>
     
     <?php
     die();    
@@ -149,8 +143,7 @@ function init_listitems( $atts ) {
             
             $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
             $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
-            $wp_query = new WP_Query();
-            $wp_query->query( $args );
+            $wp_query = new WP_Query($args);
             
             $output .= '<div class="paginateNumber">'. $paged . '</div>';
             $total_pages = $wp_query->max_num_pages; 
@@ -181,12 +174,10 @@ function init_listitems( $atts ) {
                         $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>';
                     }
                     
-                    //$output .= the_posts_pagination( array('prev_text' => __( 'Previous page', 'twentyseventeen' ), 'next_text' => __( 'Next page', 'twentyseventeen' ), 'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>', ) );
-                    
                 $output .= '</nav></div>';
             $output .= '</div>';
             
-            wp_reset_query();
+            wp_reset_postdata();
     
 	$output .= '</div>';
     
