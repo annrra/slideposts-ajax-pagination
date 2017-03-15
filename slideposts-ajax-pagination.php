@@ -194,7 +194,10 @@ function init_listitems( $atts ) {
                 $output .= '</div>' . "\n";
                 $output .= '<div class="slidePostsNav">' . "\n";
                 $output .= '<nav class="navigation pagination">' . "\n";
-                    if($paged == $total_pages) {
+                    if($total_pages == 1) {
+                        $output .= '<div class="nav-links">&nbsp;</div>' . "\n";
+                    }
+                    elseif($paged == $total_pages) {
                         $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>' . "\n";
                     } elseif ($paged == 1) {
                         $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>' . "\n";

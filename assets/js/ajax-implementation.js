@@ -25,9 +25,9 @@
 				page: page
 			},
             beforeSend: function() {
-                $('.slidePostsContainer').remove();
-        		$(document).scrollTop();
-        		$('.wrapSlidePosts').append( '<div class="wrapLoader" id="spLoader">Loading New Posts...</div>' );
+                $('.slidePostsContainer').fadeOut();
+        		$('html,body').animate({scrollTop: 200}, 300);
+        		$('.wrapSlidePosts .slidePostsTab').append( '<div class="wrapLoader" id="spLoader">Loading New Posts...</div>' );
         	},
 			success: function( html ) {
                 $('.wrapSlidePosts #spLoader').remove();
