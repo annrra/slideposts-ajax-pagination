@@ -36,7 +36,7 @@ function slideposts_options_do_page() {
                         <input name="sp_sample[gallery]" type="checkbox" value="1" <?php checked('1', $options['gallery']); ?> /><br />
                         <p>Convert the posts into gallery.<br />
                         As to look good and match the planned layout it is best to show such number of posts per page that their number is divisible by 3 - e.g. 3, 6, 9, 12 ...<br />
-                        It is set in "Posts per page" field</p>
+                        Set in "Posts per page" field</p>
                     </td>
 				</tr>
 				<tr valign="top"><th scope="row">Category name</th>
@@ -155,7 +155,7 @@ function init_listitems( $atts ) {
         $wrapmode = "wrapSlideList";
     }
     
-    $output = '<div class="wrapSlidePosts '. $wrapmode .'">'; 
+    $output = '<div class="wrapSlidePosts '. $wrapmode .'">' . "\n"; 
             
             $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
             $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
@@ -163,45 +163,53 @@ function init_listitems( $atts ) {
             
             $output .= '<div class="paginateNumber">'. $paged . '</div>';
             $total_pages = $wp_query->max_num_pages; 
-            $output .= '<div class="pagesNumber">' . $total_pages . '</div>';
+            $output .= '<div class="pagesNumber">' . $total_pages . '</div>' . "\n";
             
-            $output .= '<div class="slidePostsContainer"><div class="slidePostsTab">';
+            $output .= '<div class="slidePostsContainer">' . "\n";
+            $output .= '<div class="slidePostsTab">' . "\n";
                 $count=0;
                 while ($wp_query->have_posts()) : $wp_query->the_post(); 
                     
-                    $output .= '<div class="postBlock postBlock'. $count .'">';
+                    $output .= '<div class="postBlock postBlock'. $count .'">' . "\n";
                     if ($ifgallery == 1) {
-                        $output .= '<div class="postImg"><a class="postEntryLink" href="'. get_the_permalink() .'">';
-                        $output .= '<div class="postOverContainer"><h3>' . get_the_title() . '</h3>';
+                        $output .= '<div class="postImg">' . "\n";
+                        $output .= '<a class="postEntryLink" href="'. get_the_permalink() .'">' . "\n";
+                        $output .= '<div class="postOverContainer">' . "\n";
+                        $output .= '<h3>' . get_the_title() . '</h3>' . "\n";
                         if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail($post->ID, 'thumbnail'); }
-                        $output .= '<span class="overLay"></span></div></a></div>'; 
+                        $output .= '<span class="overLay"></span>' . "\n"; 
+                        $output .= '</div>' . "\n";
+                        $output .= '</a>' . "\n";
+                        $output .= '</div>' . "\n";
                     } else {
-                        $output .= '<h3><a href="'. get_the_permalink() .'">' . get_the_title() . '</a></h3>';
-                        $output .= '<div class="postImg">';
+                        $output .= '<h3><a href="'. get_the_permalink() .'">' . get_the_title() . '</a></h3>' . "\n";
+                        $output .= '<div class="postImg">' . "\n";
                         if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail($post->ID, 'large'); } 
-                        $output .= '</div>'; 
-                        $output .= '<div class="postExcerpt"><p>' . get_the_content() . '</p></div>';
+                        $output .= '</div>' . "\n"; 
+                        $output .= '<div class="postExcerpt"><p>' . get_the_content() . '</p></div>' . "\n";
                     }
-                    $output .= '</div>';
+                    $output .= '</div>' . "\n";
                 $count++;
                 endwhile;
-                $output .= '</div>';
-                $output .= '<div class="slidePostsNav"><nav class="navigation pagination">';
+                $output .= '</div>' . "\n";
+                $output .= '<div class="slidePostsNav">' . "\n";
+                $output .= '<nav class="navigation pagination">' . "\n";
                     if($paged == $total_pages) {
-                        $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>';
+                        $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>' . "\n";
                     } elseif ($paged == 1) {
-                        $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>';
+                        $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>' . "\n";
                     } else {
-                        $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>';
-                        $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>';
+                        $output .= '<div class="nav-links"><a class="prev page-numbers" href="#">Previous page</a></div>' . "\n";
+                        $output .= '<div class="nav-links"><a class="next page-numbers" href="#">Next page</a></div>' . "\n";
                     }
                     
-                $output .= '</nav></div>';
-            $output .= '</div>';
+                $output .= '</nav>' . "\n";
+                $output .= '</div>' . "\n";
+            $output .= '</div>' . "\n";
             
             wp_reset_postdata();
     
-	$output .= '</div>';
+	$output .= '</div>' . "\n";
     
 
     return $output;
