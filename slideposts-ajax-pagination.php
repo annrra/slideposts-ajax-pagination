@@ -90,7 +90,7 @@ function slidepost_ajax_pagination() {
     $ifgallery = $options['gallery'];
     
         $paged = $_POST['page'];
-        $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
+        $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged, 'post_status' => array('publish') ); 
         $wp_query = new WP_Query( $args );
         $GLOBALS['wp_query'] = $wp_query;
         ?>
@@ -158,7 +158,7 @@ function init_listitems( $atts ) {
     $output = '<div class="wrapSlidePosts '. $wrapmode .'">' . "\n"; 
             
             $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-            $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged ); 
+            $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged, 'post_status' => array('publish') ); 
             $wp_query = new WP_Query($args);
             
             $output .= '<div class="paginateNumber">'. $paged . '</div>';

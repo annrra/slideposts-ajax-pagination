@@ -1,6 +1,9 @@
 .wrapSlidePosts {
     width: 100%;
 }
+.wrapSlidePosts .slidePostsNav nav.navigation h2 {
+    display: none;
+}
 .wrapSlidePosts .slidePostsNav {
     margin: 2em 0 0;
 }
@@ -8,6 +11,7 @@
     width: 100%;
     float: none;
     border-top: 1px solid #eee;
+    padding: 2em 0 3em;
 }
 .wrapSlidePosts .postBlock {
     padding: 0 0 20px;
@@ -30,6 +34,12 @@
 	box-shadow: none;
     cursor: pointer;
 }
+.wrapSlidePosts .slidePostsNav .nav-links .prev.page-numbers {
+    float: left;
+}
+.wrapSlidePosts .slidePostsNav .nav-links .next.page-numbers {
+    float: right;
+}
 .wrapSlidePosts .paginateNumber,
 .wrapSlidePosts .pagesNumber,
 .wrapSlidePosts .catName {
@@ -37,6 +47,7 @@
 }
 .wrapSlidePosts .postImg img {
     width: 100%;
+    height: auto;
 }
 
 .wrapSlidePosts.wrapSlideGallery .slidePostsTab {
