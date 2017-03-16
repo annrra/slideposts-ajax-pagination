@@ -19,14 +19,14 @@ function slide_posts_init(){
 
 // Add menu page
 function slideposts_options_add_page() {
-	add_options_page('SlidePosts Options', 'SlidePosts Settings', 'manage_options', 'sp_sampleoptions', 'slideposts_options_do_page');
+	add_options_page('SlidePosts Settings', 'SlidePosts', 'manage_options', 'sp_sampleoptions', 'slideposts_options_do_page');
 }
 
 // Draw the menu page itself
 function slideposts_options_do_page() {
 	?>
 	<div class="wrap">
-		<h2>SlidePosts Options</h2>
+		<h2>SlidePosts Settings</h2>
 		<form method="post" action="options.php">
 			<?php settings_fields('slide_posts_options'); ?>
 			<?php $options = get_option('sp_sample'); ?>
