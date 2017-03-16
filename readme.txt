@@ -1,19 +1,22 @@
-*** Slide Posts with Ajax Pagination ***
+=== Slide Posts with Ajax Pagination ===
 Contributors: Andrey Raychev
+Donate link: http://bettermonday.org
 Tags: AJAX, ajax pagination, ajax load posts, category, navigation, pagination, paging, post, posts, gallery, shortcode, thumbnails
-Compatible up to: 4.7.3
-Requires: 4.1 or higher
+Tested up to: 4.7.3
+Requires at least: 4.1 or higher
+Stable tag: 1.0.0
 License: GPL2
+
 
 Adds posts from custom category with ajax pagination
 
-*** Description ***
+== Description ==
 
 With this plugin one can easily convert a wordpress posts category into a slideshow of images or just slide through the pages of a category without reloading the pages.
 This can allow you to integrate a small gallery and show posts in a grid layout with their featured images. You can show the plugin inside a particular page or post without writing a single line of code. Simply specify the desired category and number of post shown per page from the settings page of the plugin under "Settings" > "SlidePosts". If the plugin is used as a gallery each post of the category should have a featured image.
 
 
-Installation:
+== Installation ==
 
 Upload the files of the plugin inside a slideposts-ajax-pagination folder to the /wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
@@ -29,3 +32,17 @@ To embed the plugin into template file you will need to pass the shortcode into 
 
 
 The shortcode will load posts from custom category specified in the plugin settings page.
+
+== Upgrade Notice ==
+
+= 1.0 =
+First stable release
+
+== Screenshots ==
+
+1. Admin screen.
+
+== Changelog ==
+
+= 1.0.0 =
+Adds posts from custom category with ajax pagination

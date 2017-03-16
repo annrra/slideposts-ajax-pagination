@@ -29,7 +29,9 @@ function slideposts_options_do_page() {
 		<h2>SlidePosts Settings</h2>
 		<form method="post" action="options.php">
 			<?php settings_fields('slide_posts_options'); ?>
-			<?php $options = get_option('sp_sample'); ?>
+			<?php $options = get_option('sp_sample'); 
+            if( ! isset($options['gallery']) ) { $options['gallery'] = false; }
+            ?>
 			<table class="form-table">
 				<tr valign="top"><th scope="row">Gallery layout</th>
 					<td>
@@ -87,7 +89,11 @@ function slidepost_ajax_pagination() {
     $options = get_option('sp_sample');
     $cat_name = $options['catname'];
     $postsnum = $options['postsnumber'];
-    $ifgallery = $options['gallery'];
+    if ( isset( $options['gallery'] ) ) {
+        $ifgallery = 1;
+    } else {
+        $ifgallery = 0;
+    }
     
         $paged = $_POST['page'];
         $args = array( 'category_name' => $cat_name, 'posts_per_page' => $postsnum, 'paged' => $paged, 'post_status' => array('publish') ); 
@@ -104,7 +110,13 @@ function slidepost_ajax_pagination() {
                     <?php 
                     if ($ifgallery == 1) { ?>
                     <div class="postImg">
-                        <a class="postEntryLink" href="<?php the_permalink(); ?>"><div class="postOverContainer"><h3><?php the_title(); ?></h3><?php if ( has_post_thumbnail() ) {the_post_thumbnail('thumbnail');} ?><span class="overLay"></span></div></a>
+                        <a class="postEntryLink" href="<?php the_permalink(); ?>">
+                            <div class="postOverContainer">
+                                <h3><?php the_title(); ?></h3>
+                                <?php if ( has_post_thumbnail() ) {the_post_thumbnail('thumbnail');} ?>
+                                <span class="overLay"></span>
+                            </div>
+                        </a>
                     </div>
                     <?php
                     } else { ?>
@@ -148,10 +160,11 @@ function init_listitems( $atts ) {
     $options = get_option('sp_sample');
     $cat_name = $options['catname'];
     $postsnum = $options['postsnumber'];
-    $ifgallery = $options['gallery'];
-    if ($ifgallery == 1) {
+    if ( isset( $options['gallery'] ) ) {
+        $ifgallery = 1;
         $wrapmode = "wrapSlideGallery";
     } else {
+        $ifgallery = 0;
         $wrapmode = "wrapSlideList";
     }
     
@@ -168,7 +181,7 @@ function init_listitems( $atts ) {
             $output .= '<div class="slidePostsContainer">' . "\n";
             $output .= '<div class="slidePostsTab">' . "\n";
                 $count=0;
-                while ($wp_query->have_posts()) : $wp_query->the_post(); 
+                while ($wp_query->have_posts()) : $wp_query->the_post();
                     
                     $output .= '<div class="postBlock postBlock'. $count .'">' . "\n";
                     if ($ifgallery == 1) {
@@ -176,7 +189,7 @@ function init_listitems( $atts ) {
                         $output .= '<a class="postEntryLink" href="'. get_the_permalink() .'">' . "\n";
                         $output .= '<div class="postOverContainer">' . "\n";
                         $output .= '<h3>' . get_the_title() . '</h3>' . "\n";
-                        if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail($post->ID, 'thumbnail'); }
+                        if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail(get_the_ID(), 'thumbnail'); }
                         $output .= '<span class="overLay"></span>' . "\n"; 
                         $output .= '</div>' . "\n";
                         $output .= '</a>' . "\n";
@@ -184,7 +197,7 @@ function init_listitems( $atts ) {
                     } else {
                         $output .= '<h3><a href="'. get_the_permalink() .'">' . get_the_title() . '</a></h3>' . "\n";
                         $output .= '<div class="postImg">' . "\n";
-                        if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail($post->ID, 'large'); } 
+                        if ( has_post_thumbnail() ) { $output .= get_the_post_thumbnail(get_the_ID(), 'large'); } 
                         $output .= '</div>' . "\n"; 
                         $output .= '<div class="postExcerpt"><p>' . get_the_content() . '</p></div>' . "\n";
                     }
