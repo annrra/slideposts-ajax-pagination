@@ -2,7 +2,7 @@
 Contributors: Andrey Raychev
 Donate link: http://bettermonday.org
 Tags: AJAX, ajax pagination, ajax load posts, category, navigation, pagination, paging, post, posts, gallery, shortcode, thumbnails
-Tested up to: 4.7.3
+Tested up to: 5.3
 Requires at least: 4.1 or higher
 Stable tag: 1.0.0
 License: GPL2
